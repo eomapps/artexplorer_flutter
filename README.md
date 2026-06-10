@@ -52,6 +52,8 @@ Firebase config files are not committed to this repo. To run the project locally
 ## Running the App
 
 ```bash
+git clone https://github.com/eomapps/artexplorer_flutter.git
+cd artexplorer_flutter
 flutter pub get
 flutter run
 ```
