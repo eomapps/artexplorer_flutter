@@ -1,9 +1,11 @@
+import 'package:artexplorer/utils/app_strings.dart';
+
 class Artwork {
   final int? id;
   final String title;
   final String artistDisplay;
   final String dateDisplay;
-  final String imageId;
+  final String? imageId;
   final List<String> styleTitles;
   final String placeOfOrigin;
 
@@ -12,19 +14,28 @@ class Artwork {
     required this.title,
     required this.artistDisplay,
     required this.dateDisplay,
-    required this.imageId,
+    this.imageId,
     required this.styleTitles,
     required this.placeOfOrigin,
   });
 
+  String? get imageUrl => imageId == null
+      ? null
+      : '${AppStrings.urlImageBase}$imageId${AppStrings.urlImageFilter}';
+
   factory Artwork.fromMap(Map<String, dynamic> map) {
     return Artwork(
-      title: map['title'] as String,
-      artistDisplay: map['artist_display'] as String,
-      dateDisplay: map['date_display'] as String,
-      imageId: map['image_id'] as String,
-      styleTitles: map['style_titles'] as List<String>,
-      placeOfOrigin: map['place_of_origin'] as String,
+      id: map['id'] as int?,
+      title: map['title'] as String? ?? '',
+      artistDisplay: map['artist_display'] as String? ?? '',
+      dateDisplay: map['date_display'] as String? ?? '',
+      imageId: map['image_id'] as String?,
+      styleTitles:
+          (map['style_titles'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
+      placeOfOrigin: map['place_of_origin'] as String? ?? '',
     );
   }
 
