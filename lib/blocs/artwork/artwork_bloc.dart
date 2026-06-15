@@ -41,14 +41,15 @@ class ArtworkBloc extends Bloc<ArtworkEvent, ArtworkState> {
       }
     });
     on<LoadNextPage>((event, emit) async {
+      if (state is! ArtworkLoaded) return;
       final current = state as ArtworkLoaded;
       emit(ArtworkLoading());
       try {
-        final artworks = await _repository.fetchArtworksByPage(_page);
+        final artworks = await _repository.fetchArtworksByPage(++_page);
         final completeList = [...current.artworks, ...artworks];
         emit(ArtworkLoaded(artworks: completeList, page: _page));
-        _page++;
       } catch (e) {
+        --_page;
         emit(ArtworkError(error: e.toString()));
       }
     });
