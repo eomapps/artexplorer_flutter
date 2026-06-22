@@ -8,6 +8,7 @@ import 'package:artexplorer/repositories/auth_repository.dart';
 import 'package:artexplorer/repositories/collection_repository.dart';
 import 'package:artexplorer/screens/auth_screen.dart';
 import 'package:artexplorer/screens/browse_screen.dart';
+import 'package:artexplorer/theme/app_theme.dart';
 import 'package:artexplorer/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: AppStrings.appTitle,
-        theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
+        theme: AppTheme.theme,
         home: const AppBase(),
       ),
     );
