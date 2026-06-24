@@ -1,4 +1,5 @@
 import 'package:artexplorer/theme/app_colors.dart';
+import 'package:artexplorer/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
@@ -19,6 +20,9 @@ class AppTheme {
       surface: AppColors.surface,
       onSurface: AppColors.ink,
       onSurfaceVariant: AppColors.inkMuted,
+    ),
+    textTheme: TextTheme(
+      titleLarge: AppTextStyles.appBarTitle,
     ),
   );
 }
