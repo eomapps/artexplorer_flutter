@@ -21,17 +21,47 @@ dependencies:
   flutter_bloc: ^9.1.1
   cached_network_image: ^3.4.1
   google_fonts: ^6.2.1
-  
+  flutter_native_splash: ^2.4.8
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.4
 
 
 flutter:
 
   uses-material-design: true
 
+  assets:
+    -  assets/icon/
+
+flutter_launcher_icons:
+  image_path: "assets/icon/art_explorer_icon.png"
+
+  android: "launcher_icon"
+  image_path_android: "assets/icon/art_explorer_icon.png"
+  min_sdk_android: 21 
+
+  ios: true
+  image_path_ios: "assets/icon/art_explorer_icon.png"
+  remove_alpha_ios: true
+
+  web:
+    generate: true
+    image_path: "assets/icon/art_explorer_icon.png"
+    background_color: "#F0EBE1"
+    theme_color: "#8C6B4A"
+
+flutter_native_splash:
+  color: "#2C2520" 
+  image: assets/icon/art_explorer_icon.png
+  fullscreen: true              
+  android_12:
+    color: "#2C2520"
+    image: assets/icon/art_explorer_splash.png
+    icon_background_color: "#2C2520"
   
