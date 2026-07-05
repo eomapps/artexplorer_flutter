@@ -2,6 +2,8 @@ class AppStrings {
   AppStrings._();
 
   static const String appTitle = 'Art Explorer';
+  static const String appEyebrowLabel = 'Art Institute of Chicago';
+  static const String tagline = '60,000 works. Open access.\nAll yours.';
 
   static const String urlImageBase = 'https://www.artic.edu/iiif/2/';
   static const String urlImageFilter = '/full/843,/0/default.jpg';

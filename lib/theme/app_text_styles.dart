@@ -29,9 +29,7 @@ class AppTextStyles {
     fontWeight: FontWeight.bold,
   );
 
-  static final TextStyle serifBody = GoogleFonts.playfairDisplay(
-    fontSize: 15,
-  );
+  static final TextStyle serifBody = GoogleFonts.playfairDisplay(fontSize: 15);
 
   static final TextStyle serifItalicMuted = GoogleFonts.playfairDisplay(
     fontSize: 16,
@@ -57,6 +55,6 @@ class AppTextStyles {
 
   static final TextStyle kicker = GoogleFonts.barlowCondensed(
     fontSize: 11,
-    letterSpacing: 2.0,
+    letterSpacing: 4.0,
   );
 }
