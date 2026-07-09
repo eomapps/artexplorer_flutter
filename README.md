@@ -4,6 +4,13 @@ A Flutter app for browsing the Art Institute of Chicago's public collection — 
 
 *Early work in progress — the roadmap below reflects current state. Built in public.*
 
+## Screenshots
+
+| | Splash | Auth Screen |
+|---|:---:|:---:|
+| **iOS** | <img src="docs/ios_splash.png" width="160"/> | <img src="docs/ios_dash.png" width="160"/> |
+| **Android** | <img src="docs/android_splash.png" width="160"/> | <img src="docs/android_dash.png" width="160"/> |
+
 ## Tech Stack
 
 | Layer | Choice | Notes |
@@ -56,7 +63,8 @@ lib/
 - [x] Firebase Auth — `AuthRepository` + `AuthBloc` (email/password and Google Sign-In)
 - [x] `CollectionRepository` + `CollectionBloc`
 - [ ] Browse screen
-- [ ] Auth screen — email/password and Google Sign-In wired to `AuthBloc`
+- [x] Auth screen UI — landing state (wordmark, Google Sign-In and email buttons)
+- [ ] Auth screen wired to `AuthBloc` (`SignInWithGoogle`, `SignInWithEmail` events)
 - [ ] Collection screen
 - [ ] Detail screen — save/unsave wired to Firestore
 - [ ] Search screen
