@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: AppStrings.appTitle,
         theme: AppTheme.theme,
         home: const AppBase(),
