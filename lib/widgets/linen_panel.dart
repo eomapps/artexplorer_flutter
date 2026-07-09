@@ -15,15 +15,36 @@ class LinenPanel extends StatelessWidget {
       ),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
-        child: Container(
-          padding: EdgeInsets.fromLTRB(
-            24,
-            20,
-            24,
-            28 + MediaQuery.of(context).padding.bottom,
-          ),
-          color: Color.fromRGBO(232, 224, 210, 0.88),
-          child: child,
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: Container(
+                color: const Color.fromRGBO(232, 224, 210, 0.88),
+              ),
+            ),
+            Positioned.fill(
+              child: Opacity(
+                opacity: 0.04,
+                child: DecoratedBox(
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/textures/noise.png'),
+                      repeat: ImageRepeat.repeat,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                24,
+                20,
+                24,
+                28 + MediaQuery.of(context).padding.bottom,
+              ),
+              child: child,
+            ),
+          ],
         ),
       ),
     );

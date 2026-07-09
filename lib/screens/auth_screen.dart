@@ -35,7 +35,19 @@ class _AuthScreenState extends State<AuthScreen> {
               ),
             ),
           ),
-          Container(width: double.infinity, height: double.infinity),
+          Opacity(
+            opacity: 0.04,
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/textures/noise.png'),
+                  repeat: ImageRepeat.repeat,
+                ),
+              ),
+            ),
+          ),
           SafeArea(
             bottom: false,
             child: Column(
