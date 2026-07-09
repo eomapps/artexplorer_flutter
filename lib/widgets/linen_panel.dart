@@ -16,7 +16,12 @@ class LinenPanel extends StatelessWidget {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
         child: Container(
-          padding: EdgeInsets.fromLTRB(24, 20, 24, 28),
+          padding: EdgeInsets.fromLTRB(
+            24,
+            20,
+            24,
+            28 + MediaQuery.of(context).padding.bottom,
+          ),
           color: Color.fromRGBO(232, 224, 210, 0.88),
           child: child,
         ),

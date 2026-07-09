@@ -37,6 +37,7 @@ class _AuthScreenState extends State<AuthScreen> {
           ),
           Container(width: double.infinity, height: double.infinity),
           SafeArea(
+            bottom: false,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
