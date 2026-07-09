@@ -38,6 +38,7 @@ flutter:
 
   assets:
     -  assets/icon/
+    -  assets/buttons/
 
 flutter_launcher_icons:
   image_path: "assets/icon/art_explorer_icon.png"

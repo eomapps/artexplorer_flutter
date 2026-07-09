@@ -3,6 +3,7 @@ import 'package:artexplorer/theme/app_text_styles.dart';
 import 'package:artexplorer/utils/app_strings.dart';
 import 'package:artexplorer/widgets/linen_panel.dart';
 import 'package:flutter/material.dart';
+import 'dart:io' show Platform;
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -77,7 +78,87 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                   ),
                 ),
-                LinenPanel(child: Text('test the panel')),
+                LinenPanel(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      ElevatedButton.icon(
+                        icon: Platform.isIOS
+                            ? Image.asset(
+                                'assets/buttons/g_logo_ios.png',
+                                width: 18,
+                                height: 18,
+                              )
+                            : Image.asset(
+                                'assets/buttons/g_logo_android.png',
+                                width: 18,
+                                height: 18,
+                              ),
+                        onPressed: () {},
+                        label: Text(
+                          AppStrings.continueWithGoogle.toUpperCase(),
+                        ),
+                        style: ButtonStyle(
+                          textStyle: WidgetStatePropertyAll(
+                            AppTextStyles.buttonLabel,
+                          ),
+                          elevation: const WidgetStatePropertyAll(0),
+                          shape: WidgetStatePropertyAll(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                          padding: const WidgetStatePropertyAll(
+                            EdgeInsets.symmetric(vertical: 16),
+                          ),
+                          backgroundColor: const WidgetStatePropertyAll(
+                            AppColors.accent,
+                          ),
+                          foregroundColor: const WidgetStatePropertyAll(
+                            AppColors.white,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      OutlinedButton(
+                        style: ButtonStyle(
+                          textStyle: WidgetStatePropertyAll(
+                            AppTextStyles.buttonLabel.copyWith(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                            ),
+                          ),
+                          elevation: const WidgetStatePropertyAll(0),
+                          shape: WidgetStatePropertyAll(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                          padding: const WidgetStatePropertyAll(
+                            EdgeInsets.symmetric(vertical: 14),
+                          ),
+                          foregroundColor: const WidgetStatePropertyAll(
+                            AppColors.inkMuted,
+                          ),
+                          side: WidgetStatePropertyAll(
+                            BorderSide(color: AppColors.divider),
+                          ),
+                        ),
+                        onPressed: () {},
+                        child: Text(AppStrings.signInWithEmail.toUpperCase()),
+                      ),
+                      SizedBox(height: 12),
+                      Text(
+                        AppStrings.youAcceptTOS,
+                        style: AppTextStyles.kicker.copyWith(
+                          color: AppColors.inkFaint,
+                          letterSpacing: 0.3,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

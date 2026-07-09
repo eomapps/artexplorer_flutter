@@ -11,4 +11,11 @@ class AppStrings {
   static const String urlFetchPath = 'api/v1/artworks/search';
   static const String fields =
       'id,title,artist_display,date_display,image_id,style_titles,place_of_origin';
+
+  static const String continueWithGoogle = 'Continue with Google';
+  static const String signInWithEmail = 'Sign in with email';
+  static const String youAcceptTOS =
+      'By continuing you agree to our terms of service';
+  static const String email = 'Email';
+  static const String emailExample = 'hello@example.com';
 }
