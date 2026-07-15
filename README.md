@@ -51,8 +51,17 @@ lib/
 │   ├── art_repository.dart        # AIC API — browse, style filter, search
 │   ├── auth_repository.dart       # Firebase Auth
 │   └── collection_repository.dart # Firestore — load, save, remove
-└── utils/
-    └── app_strings.dart
+├── screens/
+│   ├── auth_screen.dart           # wired to AuthBloc — email sign-up fallback still pending
+│   └── browse_screen.dart         # stub — title only
+├── theme/
+│   ├── app_colors.dart            # color tokens
+│   ├── app_text_styles.dart       # Playfair Display / Barlow Condensed text styles
+│   └── app_theme.dart             # ThemeData
+├── utils/
+│   └── app_strings.dart
+└── widgets/
+    └── linen_panel.dart           # signature frosted-linen panel — used on Auth, Browse, Detail
 ```
 
 ## Roadmap
