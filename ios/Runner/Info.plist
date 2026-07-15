@@ -26,6 +26,17 @@
 		<string>$(FLUTTER_BUILD_NUMBER)</string>
 		<key>LSRequiresIPhoneOS</key>
 		<true/>
+		<key>CFBundleURLTypes</key>
+			<array>
+				<dict>
+					<key>CFBundleURLSchemes</key>
+					<array>
+						<string>com.googleusercontent.apps.317626111342-nkrejkhj3cu7fuselvadph94npk9u5ak</string>
+					</array>
+				</dict>
+			</array>
+		<key>GIDClientID</key>
+		<string>317626111342-nkrejkhj3cu7fuselvadph94npk9u5ak.apps.googleusercontent.com</string>
 		<key>UIApplicationSceneManifest</key>
 		<dict>
 			<key>UIApplicationSupportsMultipleScenes</key>
