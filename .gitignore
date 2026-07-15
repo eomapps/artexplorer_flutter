@@ -45,6 +45,9 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+# iOS build exports
+*.ipa
+
 # Firebase config (platform-specific, not committed)
 google-services.json
 **/GoogleService-Info.plist
