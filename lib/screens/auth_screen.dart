@@ -9,6 +9,8 @@ import 'package:artexplorer/blocs/auth/auth_bloc.dart';
 import 'package:artexplorer/blocs/auth/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+enum AuthDisplayState { signInOptions, enterEmail, createAccount }
+
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
 
@@ -17,7 +19,7 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  bool _showEmailForm = false;
+  AuthDisplayState displayState = AuthDisplayState.signInOptions;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -35,6 +37,10 @@ class _AuthScreenState extends State<AuthScreen> {
         if (state is AuthError) {
           debugPrint(state.error);
           final snackBar = SnackBar(content: Text(state.error));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+        if (state is AuthPasswordReset) {
+          final snackBar = SnackBar(content: Text(AppStrings.checkEmail));
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
       },
@@ -114,11 +120,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         ),
                       ),
                     ),
-                    LinenPanel(
-                      child: !_showEmailForm
-                          ? buildSignInOptions(isLoading)
-                          : buildEnterEmailUI(isLoading),
-                    ),
+                    LinenPanel(child: getLinenPanelWidget(isLoading)),
                   ],
                 ),
               ),
@@ -127,6 +129,14 @@ class _AuthScreenState extends State<AuthScreen> {
         );
       },
     );
+  }
+
+  Widget getLinenPanelWidget(bool isLoading) {
+    return switch (displayState) {
+      AuthDisplayState.signInOptions => buildSignInOptions(isLoading),
+      AuthDisplayState.enterEmail => buildEnterEmailUI(isLoading),
+      AuthDisplayState.createAccount => buildCreateEmailSignInUI(isLoading),
+    };
   }
 
   Widget buildSignInOptions(bool isLoading) {
@@ -183,7 +193,7 @@ class _AuthScreenState extends State<AuthScreen> {
           ),
           onPressed: () {
             setState(() {
-              _showEmailForm = true;
+              displayState = AuthDisplayState.enterEmail;
             });
           },
           child: Text(AppStrings.signInWithEmail.toUpperCase()),
@@ -217,7 +227,6 @@ class _AuthScreenState extends State<AuthScreen> {
           controller: emailController,
           style: AppTextStyles.serifBody,
           decoration: InputDecoration(
-            hint: Text(AppStrings.emailExample),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(width: 1, color: AppColors.divider),
@@ -237,13 +246,32 @@ class _AuthScreenState extends State<AuthScreen> {
           controller: passwordController,
           style: AppTextStyles.serifBody,
           decoration: InputDecoration(
-            hint: Text(AppStrings.passwordExample),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(width: 1, color: AppColors.divider),
             ),
           ),
           obscureText: true,
+        ),
+        SizedBox(height: 10),
+        GestureDetector(
+          onTap: () {
+            // TODO: implement proper email validation:
+            if (emailController.text.length > 5) {
+              context.read<AuthBloc>().add(
+                ResetPassword(email: emailController.text),
+              );
+            } else {
+              // TODO: implement feedback displayed by snackbar
+            }
+          },
+          child: Text(
+            AppStrings.forgotPasswordPrompt,
+            style: AppTextStyles.kicker.copyWith(
+              letterSpacing: 1.5,
+              color: AppColors.inkMuted,
+            ),
+          ),
         ),
         SizedBox(height: 10),
         ElevatedButton(
@@ -291,7 +319,128 @@ class _AuthScreenState extends State<AuthScreen> {
           ),
           onPressed: () {
             setState(() {
-              _showEmailForm = false;
+              displayState = AuthDisplayState.signInOptions;
+              emailController.clear();
+              passwordController.clear();
+            });
+          },
+          child: Text(AppStrings.back.toUpperCase()),
+        ),
+        SizedBox(height: 10),
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              displayState = AuthDisplayState.createAccount;
+              emailController.clear();
+              passwordController.clear();
+            });
+          },
+          child: Center(
+            child: Text(
+              AppStrings.signUpPrompt,
+              style: AppTextStyles.kicker.copyWith(
+                letterSpacing: 1.5,
+                color: AppColors.inkMuted,
+                fontSize: 14,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildCreateEmailSignInUI(bool isLoading) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          AppStrings.email.toUpperCase(),
+          style: AppTextStyles.kicker.copyWith(
+            letterSpacing: 1.5,
+            color: AppColors.inkMuted,
+          ),
+        ),
+        SizedBox(height: 6),
+        TextField(
+          controller: emailController,
+          style: AppTextStyles.serifBody,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(width: 1, color: AppColors.divider),
+            ),
+          ),
+        ),
+        SizedBox(height: 6),
+        Text(
+          AppStrings.password.toUpperCase(),
+          style: AppTextStyles.kicker.copyWith(
+            letterSpacing: 1.5,
+            color: AppColors.inkMuted,
+          ),
+        ),
+        SizedBox(height: 6),
+        TextField(
+          controller: passwordController,
+          style: AppTextStyles.serifBody,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(width: 1, color: AppColors.divider),
+            ),
+          ),
+          obscureText: true,
+        ),
+        SizedBox(height: 10),
+        ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(AppColors.accent),
+            foregroundColor: WidgetStatePropertyAll(AppColors.white),
+            shape: WidgetStatePropertyAll(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            ),
+            padding: const WidgetStatePropertyAll(
+              EdgeInsets.symmetric(vertical: 16),
+            ),
+          ),
+          onPressed: () {
+            context.read<AuthBloc>().add(
+              CreateLoginWithEmail(
+                email: emailController.text,
+                password: passwordController.text,
+              ),
+            );
+          },
+          child: Text(
+            AppStrings.signUp.toUpperCase(),
+            style: AppTextStyles.buttonLabel,
+          ),
+        ),
+        SizedBox(height: 10),
+        OutlinedButton(
+          style: ButtonStyle(
+            textStyle: WidgetStatePropertyAll(
+              AppTextStyles.buttonLabel.copyWith(
+                fontWeight: FontWeight.w600,
+                fontSize: 14,
+              ),
+            ),
+            elevation: const WidgetStatePropertyAll(0),
+            shape: WidgetStatePropertyAll(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            ),
+            padding: const WidgetStatePropertyAll(
+              EdgeInsets.symmetric(vertical: 14),
+            ),
+            foregroundColor: const WidgetStatePropertyAll(AppColors.inkMuted),
+            side: WidgetStatePropertyAll(BorderSide(color: AppColors.divider)),
+          ),
+          onPressed: () {
+            setState(() {
+              displayState = AuthDisplayState.enterEmail;
+              emailController.clear();
+              passwordController.clear();
             });
           },
           child: Text(AppStrings.back.toUpperCase()),

@@ -17,3 +17,7 @@ final class AuthError extends AuthState {
 
   AuthError({required this.error});
 }
+
+final class AuthPasswordReset extends AuthState {}
+
+final class AuthSessionChecking extends AuthState {}

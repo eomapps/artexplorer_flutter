@@ -20,6 +20,14 @@ class AuthRepository {
     return result.user!;
   }
 
+  Future<User> createLoginWithEmail(String email, String password) async {
+    final result = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    return result.user!;
+  }
+
   Future<User?> checkAuth() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -30,5 +38,9 @@ class AuthRepository {
 
   Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
+  }
+
+  Future<void> requestPasswordResetEmail(String email) async {
+    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
   }
 }

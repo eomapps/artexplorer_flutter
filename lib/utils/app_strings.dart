@@ -17,9 +17,12 @@ class AppStrings {
   static const String youAcceptTOS =
       'By continuing you agree to our terms of service';
   static const String email = 'Email';
-  static const String emailExample = 'hello@example.com';
   static const String password = 'Password';
-  static const String passwordExample = '••••••••';
   static const String signInPrompt = 'Sign In';
   static const String back = 'Back';
+  static const String signUpPrompt = 'Don\'t have an account? Sign Up';
+  static const String signUp = 'Sign Up';
+  static const String forgotPasswordPrompt =
+      'Forgot password? Click to reset via email.';
+  static const String checkEmail = 'Check email to reset password';
 }

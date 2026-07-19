@@ -51,11 +51,10 @@ class AppBase extends StatelessWidget {
       builder: (context, state) {
         return switch (state) {
           AuthAuthenticated() => BrowseScreen(),
-          AuthLoading() => Scaffold(
+          AuthSessionChecking() => Scaffold(
             body: Center(child: CircularProgressIndicator()),
           ),
-          AuthUnauthenticated() => AuthScreen(),
-          AuthError() => AuthScreen(),
+          _ => AuthScreen(),
         };
       },
     );

@@ -28,8 +28,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthError(error: e.toString()));
       }
     });
-    on<CheckAuth>((event, emit) async {
+    on<CreateLoginWithEmail>((event, emit) async {
       emit(AuthLoading());
+      try {
+        final user = await _repository.createLoginWithEmail(
+          event.email,
+          event.password,
+        );
+        emit(AuthAuthenticated(user: user));
+      } catch (e) {
+        emit(AuthError(error: e.toString()));
+      }
+    });
+    on<CheckAuth>((event, emit) async {
+      emit(AuthSessionChecking());
       try {
         final user = await _repository.checkAuth();
         if (user != null) {
@@ -46,6 +58,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         await _repository.signOut();
         emit(AuthUnauthenticated());
+      } catch (e) {
+        emit(AuthError(error: e.toString()));
+      }
+    });
+    on<ResetPassword>((event, emit) async {
+      emit(AuthLoading());
+      try {
+        await _repository.requestPasswordResetEmail(event.email);
+        emit(AuthPasswordReset());
       } catch (e) {
         emit(AuthError(error: e.toString()));
       }
