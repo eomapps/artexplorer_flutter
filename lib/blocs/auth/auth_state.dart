@@ -13,7 +13,7 @@ final class AuthLoading extends AuthState {}
 final class AuthUnauthenticated extends AuthState {}
 
 final class AuthError extends AuthState {
-  final String error;
+  final FirebaseAuthException error;
 
   AuthError({required this.error});
 }

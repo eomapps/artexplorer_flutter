@@ -3,6 +3,7 @@ import 'package:artexplorer/theme/app_colors.dart';
 import 'package:artexplorer/theme/app_text_styles.dart';
 import 'package:artexplorer/utils/app_strings.dart';
 import 'package:artexplorer/widgets/linen_panel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
 import 'package:artexplorer/blocs/auth/auth_bloc.dart';
@@ -35,13 +36,10 @@ class _AuthScreenState extends State<AuthScreen> {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthError) {
-          debugPrint(state.error);
-          final snackBar = SnackBar(content: Text(state.error));
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          _showSnackbar(friendlyMessage(state.error));
         }
         if (state is AuthPasswordReset) {
-          final snackBar = SnackBar(content: Text(AppStrings.checkEmail));
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          _showSnackbar(AppStrings.checkEmail);
         }
       },
       builder: (context, state) {
@@ -447,5 +445,25 @@ class _AuthScreenState extends State<AuthScreen> {
         ),
       ],
     );
+  }
+
+  void _showSnackbar(String message) {
+    final snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  String friendlyMessage(FirebaseAuthException e) {
+    switch (e.code) {
+      case 'invalid-credential':
+        return 'Incorrect email or password.';
+      case 'user-not-found':
+        return 'No account found with that email.';
+      case 'email-already-in-use':
+        return 'An account already exists with that email.';
+      case 'too-many-requests':
+        return 'Too many attempts. Please try again later.';
+      default:
+        return 'Something went wrong. Please try again.';
+    }
   }
 }
