@@ -6,10 +6,10 @@ A Flutter app for browsing the Art Institute of Chicago's public collection — 
 
 ## Screenshots
 
-| | Splash | Auth Screen |
-|---|:---:|:---:|
-| **iOS** | <img src="docs/ios_splash.png" width="160"/> | <img src="docs/ios_dash.png" width="160"/> |
-| **Android** | <img src="docs/android_splash.png" width="160"/> | <img src="docs/android_dash.png" width="160"/> |
+| | Splash | Auth Screen | Email Sign In | Email Sign Up |
+|---|:---:|:---:|:---:|:---:|
+| **iOS** | <img src="docs/ios_splash.png" width="160"/> | <img src="docs/ios_dash.png" width="160"/> | <img src="docs/ios_email_sign_in.png" width="160"/> | <img src="docs/ios_email_sign_up.png" width="160"/> |
+| **Android** | <img src="docs/android_splash.png" width="160"/> | <img src="docs/android_dash.png" width="160"/> | <img src="docs/android_email_sign_in.png" width="160"/> | <img src="docs/android_email_sign_up.png" width="160"/> |
 
 ## Tech Stack
 
@@ -52,7 +52,7 @@ lib/
 │   ├── auth_repository.dart       # Firebase Auth
 │   └── collection_repository.dart # Firestore — load, save, remove
 ├── screens/
-│   ├── auth_screen.dart           # wired to AuthBloc — email sign-up fallback still pending
+│   ├── auth_screen.dart           # wired to AuthBloc — sign-in, sign-up, and password reset
 │   └── browse_screen.dart         # stub — title only
 ├── theme/
 │   ├── app_colors.dart            # color tokens
@@ -71,9 +71,9 @@ lib/
 - [x] `ArtworkBloc` — fetch, filter, search, and pagination (rolls back on a failed page load)
 - [x] Firebase Auth — `AuthRepository` + `AuthBloc` (email/password and Google Sign-In)
 - [x] `CollectionRepository` + `CollectionBloc`
-- [ ] Browse screen
 - [x] Auth screen UI — landing state (wordmark, Google Sign-In and email buttons)
-- [ ] Auth screen wired to `AuthBloc` (`SignInWithGoogle`, `SignInWithEmail` events) — 🚧 In progress
+- [x] Auth screen wired to `AuthBloc` (`SignInWithGoogle`, `SignInWithEmail`, `CreateLoginWithEmail`, `ResetPassword` events)
+- [ ] Browse screen
 - [ ] Collection screen
 - [ ] Detail screen — save/unsave wired to Firestore
 - [ ] Search screen
