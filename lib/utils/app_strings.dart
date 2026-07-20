@@ -25,4 +25,9 @@ class AppStrings {
   static const String forgotPasswordPrompt =
       'Forgot password? Click to reset via email.';
   static const String checkEmail = 'Check email to reset password';
+  static const String enterValidEmailPrompt =
+      'Please enter valid email address';
+  static const String enterPasswordPrompt = 'Please enter password';
+  static const String checkPasswordLength =
+      'Passwords must be at least 8 characters';
 }

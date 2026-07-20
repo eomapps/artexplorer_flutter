@@ -9,6 +9,7 @@ import 'dart:io' show Platform;
 import 'package:artexplorer/blocs/auth/auth_bloc.dart';
 import 'package:artexplorer/blocs/auth/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:email_validator/email_validator.dart';
 
 enum AuthDisplayState { signInOptions, enterEmail, createAccount }
 
@@ -254,13 +255,12 @@ class _AuthScreenState extends State<AuthScreen> {
         SizedBox(height: 10),
         GestureDetector(
           onTap: () {
-            // TODO: implement proper email validation:
-            if (emailController.text.length > 5) {
+            if (EmailValidator.validate(emailController.text.trim())) {
               context.read<AuthBloc>().add(
-                ResetPassword(email: emailController.text),
+                ResetPassword(email: emailController.text.trim()),
               );
             } else {
-              // TODO: implement feedback displayed by snackbar
+              _showSnackbar(AppStrings.enterValidEmailPrompt);
             }
           },
           child: Text(
@@ -284,12 +284,20 @@ class _AuthScreenState extends State<AuthScreen> {
             ),
           ),
           onPressed: () {
-            context.read<AuthBloc>().add(
-              SignInWithEmail(
-                email: emailController.text,
-                password: passwordController.text,
-              ),
-            );
+            if (EmailValidator.validate(emailController.text.trim())) {
+              if (passwordController.text.trim().isNotEmpty) {
+                context.read<AuthBloc>().add(
+                  SignInWithEmail(
+                    email: emailController.text.trim(),
+                    password: passwordController.text,
+                  ),
+                );
+              } else {
+                _showSnackbar(AppStrings.enterPasswordPrompt);
+              }
+            } else {
+              _showSnackbar(AppStrings.enterValidEmailPrompt);
+            }
           },
           child: Text(
             AppStrings.signInPrompt.toUpperCase(),
@@ -403,12 +411,20 @@ class _AuthScreenState extends State<AuthScreen> {
             ),
           ),
           onPressed: () {
-            context.read<AuthBloc>().add(
-              CreateLoginWithEmail(
-                email: emailController.text,
-                password: passwordController.text,
-              ),
-            );
+            if (EmailValidator.validate(emailController.text.trim())) {
+              if (passwordController.text.trim().length >= 8) {
+                context.read<AuthBloc>().add(
+                  CreateLoginWithEmail(
+                    email: emailController.text.trim(),
+                    password: passwordController.text,
+                  ),
+                );
+              } else {
+                _showSnackbar(AppStrings.checkPasswordLength);
+              }
+            } else {
+              _showSnackbar(AppStrings.enterValidEmailPrompt);
+            }
           },
           child: Text(
             AppStrings.signUp.toUpperCase(),
