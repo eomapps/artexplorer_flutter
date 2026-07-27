@@ -70,4 +70,7 @@ class Artwork {
       placeOfOrigin: placeOfOrigin ?? this.placeOfOrigin,
     );
   }
+
+  String get primaryStyleTitle =>
+      styleTitles.isNotEmpty ? styleTitles.first : '';
 }

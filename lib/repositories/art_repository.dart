@@ -17,9 +17,7 @@ class ArtRepository {
       var jsonResponse =
           convert.jsonDecode(response.body) as Map<String, dynamic>;
       var data = jsonResponse['data'];
-      return (data as List)
-          .map((e) => Artwork.fromMap(e as Map<String, dynamic>))
-          .toList();
+      return dataFromList(data);
     } else {
       throw Exception('Request failed with status: ${response.statusCode}');
     }
@@ -37,9 +35,7 @@ class ArtRepository {
       var jsonResponse =
           convert.jsonDecode(response.body) as Map<String, dynamic>;
       var data = jsonResponse['data'];
-      return (data as List)
-          .map((e) => Artwork.fromMap(e as Map<String, dynamic>))
-          .toList();
+      return dataFromList(data);
     } else {
       throw Exception('Request failed with status: ${response.statusCode}');
     }
@@ -57,11 +53,16 @@ class ArtRepository {
       var jsonResponse =
           convert.jsonDecode(response.body) as Map<String, dynamic>;
       var data = jsonResponse['data'];
-      return (data as List)
-          .map((e) => Artwork.fromMap(e as Map<String, dynamic>))
-          .toList();
+      return dataFromList(data);
     } else {
       throw Exception('Request failed with status: ${response.statusCode}');
     }
+  }
+
+  List<Artwork> dataFromList(List<dynamic> data) {
+    return data
+        .map((e) => Artwork.fromMap(e as Map<String, dynamic>))
+        .where((artwork) => artwork.imageUrl != null)
+        .toList();
   }
 }

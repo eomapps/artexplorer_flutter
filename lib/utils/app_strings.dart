@@ -7,7 +7,7 @@ class AppStrings {
 
   static const String urlImageBase = 'https://www.artic.edu/iiif/2/';
   static const String urlImageFilter = '/full/843,/0/default.jpg';
-  static const String urlFetchBase = 'https://api.artic.edu/';
+  static const String urlFetchBase = 'api.artic.edu';
   static const String urlFetchPath = 'api/v1/artworks/search';
   static const String fields =
       'id,title,artist_display,date_display,image_id,style_titles,place_of_origin';
@@ -30,4 +30,6 @@ class AppStrings {
   static const String enterPasswordPrompt = 'Please enter password';
   static const String checkPasswordLength =
       'Passwords must be at least 8 characters';
+  static const String buttonPrevious = 'Prev';
+  static const String buttonNext = 'Next';
 }
