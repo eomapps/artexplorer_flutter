@@ -49,7 +49,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        'Something went wrong. Please try again.',
+                        AppStrings.errorMessage,
                         textAlign: TextAlign.center,
                         style: AppTextStyles.serifBody.copyWith(
                           color: AppColors.inkMuted,
