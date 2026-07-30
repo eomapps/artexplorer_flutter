@@ -76,7 +76,6 @@ lib/
 - [ ] Browse screen — 🚧 In progress
 - [ ] Collection screen
 - [ ] Detail screen — save/unsave wired to Firestore
-- [ ] Search screen
 - [ ] Polish — transitions, empty states, error states, loading skeletons
 - [ ] Tests (`bloc_test`)
 
