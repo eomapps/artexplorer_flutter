@@ -73,7 +73,7 @@ lib/
 - [x] `CollectionRepository` + `CollectionBloc`
 - [x] Auth screen UI — landing state (wordmark, Google Sign-In and email buttons)
 - [x] Auth screen wired to `AuthBloc` (`SignInWithGoogle`, `SignInWithEmail`, `CreateLoginWithEmail`, `ResetPassword` events)
-- [ ] Browse screen
+- [ ] Browse screen — 🚧 In progress
 - [ ] Collection screen
 - [ ] Detail screen — save/unsave wired to Firestore
 - [ ] Search screen
