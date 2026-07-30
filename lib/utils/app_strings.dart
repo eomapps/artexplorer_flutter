@@ -32,4 +32,6 @@ class AppStrings {
       'Passwords must be at least 8 characters';
   static const String buttonPrevious = 'Prev';
   static const String buttonNext = 'Next';
+  static const String buttonRetry = 'Retry';
+  static const String errorMessage = 'Something went wrong. Please try again.';
 }
