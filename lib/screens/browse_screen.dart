@@ -116,8 +116,13 @@ class _BrowseScreenState extends State<BrowseScreen> {
                 title: Text(state.artworks[index].placeOfOrigin),
               ),
               body: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  ArtworkCard(imageUrl: state.artworks[index].imageUrl!),
+                  Expanded(
+                    child: ArtworkCard(
+                      imageUrl: state.artworks[index].imageUrl!,
+                    ),
+                  ),
                   LinenPanel(
                     child: buildInformationWidget(
                       state.artworks[index],
