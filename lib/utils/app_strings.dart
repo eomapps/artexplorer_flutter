@@ -34,4 +34,16 @@ class AppStrings {
   static const String buttonNext = 'Next';
   static const String buttonRetry = 'Retry';
   static const String errorMessage = 'Something went wrong. Please try again.';
+  static const String caseInvalidCredential = 'invalid-credential';
+  static const String incorrectEmail = 'Incorrect email or password.';
+  static const String caseUserNotFound = 'user-not-found';
+  static const String noAccountFound = 'No account found with that email.';
+  static const String caseEmailAlreadyInUse = 'email-already-in-use';
+  static const String accountAlreadyExists =
+      'An account already exists with that email.';
+  static const String caseTooManyRequests = 'too-many-requests';
+  static const String tooManyAttempts =
+      'Too many attempts. Please try again later.';
+  static const String defaultErrorMessage =
+      'Something went wrong. Please try again.';
 }

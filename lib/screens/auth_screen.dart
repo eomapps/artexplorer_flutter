@@ -470,16 +470,16 @@ class _AuthScreenState extends State<AuthScreen> {
 
   String friendlyMessage(FirebaseAuthException e) {
     switch (e.code) {
-      case 'invalid-credential':
-        return 'Incorrect email or password.';
-      case 'user-not-found':
-        return 'No account found with that email.';
-      case 'email-already-in-use':
-        return 'An account already exists with that email.';
-      case 'too-many-requests':
-        return 'Too many attempts. Please try again later.';
+      case AppStrings.caseInvalidCredential:
+        return AppStrings.incorrectEmail;
+      case AppStrings.caseUserNotFound:
+        return AppStrings.noAccountFound;
+      case AppStrings.caseEmailAlreadyInUse:
+        return AppStrings.accountAlreadyExists;
+      case AppStrings.caseTooManyRequests:
+        return AppStrings.tooManyAttempts;
       default:
-        return 'Something went wrong. Please try again.';
+        return AppStrings.defaultErrorMessage;
     }
   }
 }
