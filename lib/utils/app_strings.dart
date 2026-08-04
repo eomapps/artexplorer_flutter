@@ -46,4 +46,11 @@ class AppStrings {
       'Too many attempts. Please try again later.';
   static const String defaultErrorMessage =
       'Something went wrong. Please try again.';
+  static const String date = 'Date';
+  static const String origin = 'Origin';
+  static const String movement = 'Movement';
+  static const String collection = 'Collection';
+  static const String source = 'Art Inst. Chicago';
+  static const String saveToCollection = 'Save to collection';
+  static const String removeFromCollection = 'Remove from collection';
 }

@@ -1,11 +1,7 @@
-import 'package:artexplorer/blocs/artwork/artwork_bloc.dart';
-import 'package:artexplorer/blocs/artwork/artwork_event.dart';
-import 'package:artexplorer/blocs/artwork/artwork_state.dart';
-import 'package:artexplorer/blocs/auth/auth_bloc.dart';
-import 'package:artexplorer/blocs/auth/auth_event.dart';
+import 'package:artexplorer/blocs/collection/collection_bloc.dart';
+import 'package:artexplorer/blocs/collection/collection_event.dart';
+import 'package:artexplorer/blocs/collection/collection_state.dart';
 import 'package:artexplorer/models/artwork.dart';
-import 'package:artexplorer/screens/collection_screen.dart';
-import 'package:artexplorer/screens/detail_screen.dart';
 import 'package:artexplorer/theme/app_colors.dart';
 import 'package:artexplorer/theme/app_text_styles.dart';
 import 'package:artexplorer/utils/app_strings.dart';
@@ -14,27 +10,22 @@ import 'package:artexplorer/widgets/linen_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class BrowseScreen extends StatefulWidget {
-  const BrowseScreen({super.key});
+class DetailScreen extends StatefulWidget {
+  final Artwork artwork;
+
+  const DetailScreen({super.key, required this.artwork});
 
   @override
-  State<BrowseScreen> createState() => _BrowseScreenState();
+  State<DetailScreen> createState() => _DetailScreenState();
 }
 
-class _BrowseScreenState extends State<BrowseScreen> {
-  int index = 0;
-  @override
-  void initState() {
-    context.read<ArtworkBloc>().add(FetchArtworks());
-    super.initState();
-  }
-
+class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ArtworkBloc, ArtworkState>(
+    return BlocBuilder<CollectionBloc, CollectionState>(
       builder: (context, state) {
         switch (state) {
-          case ArtworkError():
+          case CollectionError():
             debugPrint(state.error);
             return Scaffold(
               body: Center(
@@ -59,7 +50,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
                       const SizedBox(height: 20),
                       OutlinedButton(
                         onPressed: () {
-                          context.read<ArtworkBloc>().add(FetchArtworks());
+                          context.read<CollectionBloc>().add(LoadCollection());
                         },
                         style: ButtonStyle(
                           textStyle: WidgetStatePropertyAll(
@@ -82,7 +73,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
                 ),
               ),
             );
-          case ArtworkLoading():
+          case CollectionLoading():
             return Scaffold(
               body: Center(
                 child: CircularProgressIndicator(
@@ -92,42 +83,19 @@ class _BrowseScreenState extends State<BrowseScreen> {
                 ),
               ),
             );
-          case ArtworkLoaded():
+          case CollectionLoaded():
             return Scaffold(
-              appBar: AppBar(
-                actions: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute<void>(
-                          builder: (context) => const CollectionScreen(),
-                        ),
-                      );
-                    },
-                    icon: Icon(Icons.list),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      context.read<AuthBloc>().add(SignOut());
-                    },
-                    icon: Icon(Icons.logout),
-                  ),
-                ],
-                title: Text(state.artworks[index].placeOfOrigin),
-              ),
+              appBar: AppBar(),
               body: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(
-                    child: ArtworkCard(
-                      imageUrl: state.artworks[index].imageUrl!,
-                    ),
+                    child: ArtworkCard(imageUrl: widget.artwork.imageUrl!),
                   ),
                   LinenPanel(
-                    child: buildInformationWidget(
-                      state.artworks[index],
-                      state.artworks.length,
+                    child: buildDetailWidget(
+                      context,
+                      state.isArtworkSaved(widget.artwork.id!),
                     ),
                   ),
                 ],
@@ -138,55 +106,58 @@ class _BrowseScreenState extends State<BrowseScreen> {
     );
   }
 
-  Widget buildInformationWidget(Artwork artwork, int length) {
+  Widget buildDetailWidget(BuildContext context, bool isSaved) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          children: [
-            Text(artwork.primaryStyleTitle),
-            IconButton(
-              icon: Icon(Icons.arrow_forward_sharp),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (context) => DetailScreen(artwork: artwork),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-        Text(artwork.title),
-        Text(artwork.artistDisplay),
+        Row(children: [Text(widget.artwork.primaryStyleTitle)]),
+        Text(widget.artwork.title),
+        Text(widget.artwork.artistDisplay),
         Table(
           children: [
             TableRow(
               children: [
-                OutlinedButton(
-                  onPressed: () {
-                    if (index > 0) {
-                      setState(() {
-                        index--;
-                      });
-                    }
-                  },
-                  child: Text(AppStrings.buttonPrevious),
-                ),
-                OutlinedButton(
-                  onPressed: () {
-                    if (index < length - 1) {
-                      setState(() {
-                        index++;
-                      });
-                    }
-                  },
-                  child: Text(AppStrings.buttonNext),
-                ),
+                Text(AppStrings.date.toUpperCase()),
+                Text(AppStrings.origin.toUpperCase()),
+              ],
+            ),
+            TableRow(
+              children: [
+                Text(widget.artwork.dateDisplay),
+                Text(widget.artwork.placeOfOrigin),
+              ],
+            ),
+            TableRow(
+              children: [
+                Text(AppStrings.movement.toUpperCase()),
+                Text(AppStrings.collection.toUpperCase()),
+              ],
+            ),
+            TableRow(
+              children: [
+                Text(widget.artwork.primaryStyleTitle),
+                Text(AppStrings.source),
               ],
             ),
           ],
+        ),
+        ElevatedButton(
+          onPressed: () {
+            if (isSaved) {
+              context.read<CollectionBloc>().add(
+                RemoveArtwork(id: widget.artwork.id!),
+              );
+            } else {
+              context.read<CollectionBloc>().add(
+                SaveArtwork(artwork: widget.artwork),
+              );
+            }
+          },
+          child: Text(
+            isSaved
+                ? AppStrings.removeFromCollection
+                : AppStrings.saveToCollection,
+          ),
         ),
       ],
     );

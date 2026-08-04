@@ -73,9 +73,9 @@ lib/
 - [x] `CollectionRepository` + `CollectionBloc`
 - [x] Auth screen UI — landing state (wordmark, Google Sign-In and email buttons)
 - [x] Auth screen wired to `AuthBloc` (`SignInWithGoogle`, `SignInWithEmail`, `CreateLoginWithEmail`, `ResetPassword` events)
-- [ ] Browse screen — 🚧 In progress
+- [ ] Browse screen — 🚧 In progress (metadata typography + pagination trigger pending)
 - [ ] Collection screen
-- [ ] Detail screen — save/unsave wired to Firestore
+- [ ] Detail screen — save/unsave wired to Firestore -  🚧 In progress (styling + auth guard pending)
 - [ ] Polish — empty states, error states
 - [ ] Tests (`bloc_test`)
 
