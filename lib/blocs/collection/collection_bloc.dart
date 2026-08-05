@@ -32,8 +32,8 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
       }
     });
     on<SaveArtwork>((event, emit) async {
-      final uid = (_authBloc.state as AuthAuthenticated).user.uid;
       try {
+        final uid = (_authBloc.state as AuthAuthenticated).user.uid;
         if (state is! CollectionLoaded) return;
         final current = state as CollectionLoaded;
         await _repository.saveArtwork(uid, event.artwork);
@@ -45,8 +45,8 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
       }
     });
     on<RemoveArtwork>((event, emit) async {
-      final uid = (_authBloc.state as AuthAuthenticated).user.uid;
       try {
+        final uid = (_authBloc.state as AuthAuthenticated).user.uid;
         if (state is! CollectionLoaded) return;
         final current = state as CollectionLoaded;
         await _repository.removeArtwork(uid, event.id);
