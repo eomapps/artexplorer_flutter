@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
               AuthBloc(AuthRepository())..add(CheckAuth()),
         ),
         BlocProvider<CollectionBloc>(
+          lazy: false,
           create: (BuildContext context) =>
               CollectionBloc(context.read<AuthBloc>(), CollectionRepository()),
         ),

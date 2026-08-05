@@ -60,6 +60,9 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
     on<ClearCollection>((event, emit) async {
       emit(CollectionLoaded(artworks: []));
     });
+    if (_authBloc.state is AuthAuthenticated) {
+      add(LoadCollection());
+    }
   }
 
   @override
