@@ -53,4 +53,5 @@ class AppStrings {
   static const String source = 'Art Inst. Chicago';
   static const String saveToCollection = 'Save to collection';
   static const String removeFromCollection = 'Remove from collection';
+  static const String myCollection = 'My Collection';
 }

@@ -22,13 +22,13 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
       }
     });
     on<LoadCollection>((event, emit) async {
-      emit(CollectionLoading());
+      emit(CollectionLoading(artworks: state.artworks));
       try {
         final uid = (_authBloc.state as AuthAuthenticated).user.uid;
         final artworks = await _repository.loadCollection(uid);
         emit(CollectionLoaded(artworks: artworks));
       } catch (e) {
-        emit(CollectionError(error: e.toString()));
+        emit(CollectionError(error: e.toString(), artworks: state.artworks));
       }
     });
     on<SaveArtwork>((event, emit) async {
@@ -41,7 +41,7 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
         completeList.add(event.artwork);
         emit(CollectionLoaded(artworks: completeList));
       } catch (e) {
-        emit(CollectionError(error: e.toString()));
+        emit(CollectionError(error: e.toString(), artworks: state.artworks));
       }
     });
     on<RemoveArtwork>((event, emit) async {
@@ -54,7 +54,7 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
         completeList.removeWhere((artwork) => artwork.id == event.id);
         emit(CollectionLoaded(artworks: completeList));
       } catch (e) {
-        emit(CollectionError(error: e.toString()));
+        emit(CollectionError(error: e.toString(), artworks: state.artworks));
       }
     });
     on<ClearCollection>((event, emit) async {
