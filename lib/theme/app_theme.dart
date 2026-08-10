@@ -21,8 +21,11 @@ class AppTheme {
       onSurface: AppColors.ink,
       onSurfaceVariant: AppColors.inkMuted,
     ),
-    textTheme: TextTheme(
-      titleLarge: AppTextStyles.appBarTitle,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: AppColors.background,
+      surfaceTintColor: Colors.transparent,
+      elevation: 0,
     ),
+    textTheme: TextTheme(titleLarge: AppTextStyles.appBarTitle),
   );
 }

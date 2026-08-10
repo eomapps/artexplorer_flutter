@@ -11,29 +11,48 @@ class ArtworkCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.surface,
-      child: CachedNetworkImage(
-        fit: BoxFit.contain,
-        imageUrl: imageUrl,
-        placeholder: (context, url) => Container(
-          color: AppColors.surface,
-          child: Center(
-            child: CircularProgressIndicator(
-              backgroundColor: AppColors.divider,
-              valueColor: AlwaysStoppedAnimation<Color>(AppColors.accent),
-              strokeWidth: 8.0,
+      child: Stack(
+        children: [
+          Opacity(
+            opacity: 0.04,
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/textures/noise.png'),
+                  repeat: ImageRepeat.repeat,
+                ),
+              ),
             ),
           ),
-        ),
-        errorWidget: (context, url, error) => Container(
-          color: AppColors.surface,
-          child: Center(
-            child: Icon(
-              Icons.broken_image_outlined,
-              color: AppColors.saveRemove,
-              size: 40,
+          Center(
+            child: CachedNetworkImage(
+              fit: BoxFit.contain,
+              imageUrl: imageUrl,
+              placeholder: (context, url) => Container(
+                color: AppColors.surface,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: AppColors.divider,
+                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.accent),
+                    strokeWidth: 8.0,
+                  ),
+                ),
+              ),
+              errorWidget: (context, url, error) => Container(
+                color: AppColors.surface,
+                child: Center(
+                  child: Icon(
+                    Icons.broken_image_outlined,
+                    color: AppColors.saveRemove,
+                    size: 40,
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

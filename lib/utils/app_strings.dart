@@ -54,4 +54,7 @@ class AppStrings {
   static const String saveToCollection = 'Save to collection';
   static const String removeFromCollection = 'Remove from collection';
   static const String myCollection = 'My Collection';
+  static const String noSavedWorks = 'No saved works yet';
+  static const String emptyCollectionPrompt =
+      'Browse artworks and save the ones that move you.';
 }
