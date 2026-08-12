@@ -10,7 +10,7 @@ class ArtworkCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.surface,
+      color: AppColors.background,
       child: Stack(
         children: [
           Opacity(
@@ -31,7 +31,7 @@ class ArtworkCard extends StatelessWidget {
               fit: BoxFit.contain,
               imageUrl: imageUrl,
               placeholder: (context, url) => Container(
-                color: AppColors.surface,
+                color: AppColors.background,
                 child: Center(
                   child: CircularProgressIndicator(
                     backgroundColor: AppColors.divider,
@@ -41,7 +41,7 @@ class ArtworkCard extends StatelessWidget {
                 ),
               ),
               errorWidget: (context, url, error) => Container(
-                color: AppColors.surface,
+                color: AppColors.background,
                 child: Center(
                   child: Icon(
                     Icons.broken_image_outlined,

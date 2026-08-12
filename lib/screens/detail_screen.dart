@@ -2,6 +2,8 @@ import 'package:artexplorer/blocs/collection/collection_bloc.dart';
 import 'package:artexplorer/blocs/collection/collection_event.dart';
 import 'package:artexplorer/blocs/collection/collection_state.dart';
 import 'package:artexplorer/models/artwork.dart';
+import 'package:artexplorer/theme/app_colors.dart';
+import 'package:artexplorer/theme/app_text_styles.dart';
 import 'package:artexplorer/utils/app_strings.dart';
 import 'package:artexplorer/widgets/artwork_card.dart';
 import 'package:artexplorer/widgets/linen_panel.dart';
@@ -48,38 +50,35 @@ class DetailScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(children: [Text(artwork.primaryStyleTitle)]),
-        Text(artwork.title),
-        Text(artwork.artistDisplay),
+        if (artwork.styleTitles.isNotEmpty) ...[
+          Align(
+            alignment: Alignment.centerLeft,
+            child: buildStylePill(artwork.primaryStyleTitle),
+          ),
+          const SizedBox(height: 14),
+        ],
+        Text(
+          artwork.title,
+          style: AppTextStyles.screenTitle.copyWith(color: AppColors.ink),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          artwork.artistDisplay,
+          style: AppTextStyles.caption.copyWith(color: AppColors.inkMuted),
+        ),
+        const SizedBox(height: 20),
         Table(
           children: [
-            TableRow(
-              children: [
-                Text(AppStrings.date.toUpperCase()),
-                Text(AppStrings.origin.toUpperCase()),
-              ],
-            ),
-            TableRow(
-              children: [
-                Text(artwork.dateDisplay),
-                Text(artwork.placeOfOrigin),
-              ],
-            ),
-            TableRow(
-              children: [
-                Text(AppStrings.movement.toUpperCase()),
-                Text(AppStrings.collection.toUpperCase()),
-              ],
-            ),
-            TableRow(
-              children: [
-                Text(artwork.primaryStyleTitle),
-                Text(AppStrings.source),
-              ],
-            ),
+            buildMetadataLabelRow(AppStrings.date, AppStrings.origin),
+            buildMetadataValueRow(artwork.dateDisplay, artwork.placeOfOrigin),
+            buildMetadataLabelRow(AppStrings.movement, AppStrings.collection),
+            buildMetadataValueRow(artwork.primaryStyleTitle, AppStrings.source),
           ],
         ),
-        ElevatedButton(
+        const SizedBox(height: 12),
+        Container(height: 1, color: AppColors.divider),
+        const SizedBox(height: 20),
+        ElevatedButton.icon(
           onPressed: () {
             if (isSaved) {
               context.read<CollectionBloc>().add(
@@ -89,13 +88,81 @@ class DetailScreen extends StatelessWidget {
               context.read<CollectionBloc>().add(SaveArtwork(artwork: artwork));
             }
           },
-          child: Text(
-            isSaved
-                ? AppStrings.removeFromCollection
-                : AppStrings.saveToCollection,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: isSaved ? AppColors.saveRemove : AppColors.accent,
+            foregroundColor: AppColors.white,
+            elevation: 0,
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            textStyle: AppTextStyles.buttonLabel,
+          ),
+          icon: Icon(
+            isSaved ? Icons.favorite : Icons.favorite_border,
+            size: 16,
+          ),
+          label: Text(
+            (isSaved
+                    ? AppStrings.removeFromCollection
+                    : AppStrings.saveToCollection)
+                .toUpperCase(),
           ),
         ),
       ],
+    );
+  }
+
+  Widget buildStylePill(String style) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        color: AppColors.accent.withValues(alpha: 0.13),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        style.toUpperCase(),
+        style: AppTextStyles.chipLabel.copyWith(color: AppColors.accent),
+      ),
+    );
+  }
+
+  TableRow buildMetadataLabelRow(String left, String right) {
+    return TableRow(
+      children: [left, right]
+          .map(
+            (label) => Padding(
+              padding: const EdgeInsets.only(bottom: 3),
+              child: Text(
+                label.toUpperCase(),
+                style: AppTextStyles.chipLabel.copyWith(
+                  fontSize: 10,
+                  letterSpacing: 1.5,
+                  color: AppColors.inkFaint,
+                ),
+              ),
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  TableRow buildMetadataValueRow(String left, String right) {
+    return TableRow(
+      children: [left, right]
+          .map(
+            (value) => Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: Text(
+                value,
+                style: AppTextStyles.serifBody.copyWith(
+                  fontSize: 14,
+                  color: AppColors.ink,
+                ),
+              ),
+            ),
+          )
+          .toList(),
     );
   }
 }

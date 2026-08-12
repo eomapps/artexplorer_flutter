@@ -141,54 +141,118 @@ class _BrowseScreenState extends State<BrowseScreen> {
   Widget buildInformationWidget(Artwork artwork, int length) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(artwork.primaryStyleTitle),
-            IconButton(
-              icon: Icon(Icons.arrow_forward_sharp),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (context) => DetailScreen(artwork: artwork),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (artwork.styleTitles.isNotEmpty) ...[
+                    Text(
+                      artwork.primaryStyleTitle.toUpperCase(),
+                      style: AppTextStyles.chipLabel.copyWith(
+                        fontSize: 11,
+                        letterSpacing: 2,
+                        color: AppColors.accent,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                  ],
+                  Text(
+                    artwork.title,
+                    style: AppTextStyles.cardTitle.copyWith(
+                      color: AppColors.ink,
+                    ),
                   ),
-                );
-              },
+                  const SizedBox(height: 4),
+                  Text(
+                    artwork.artistDisplay,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.inkMuted,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 16),
+            SizedBox(
+              width: 44,
+              height: 44,
+              child: IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (context) => DetailScreen(artwork: artwork),
+                    ),
+                  );
+                },
+                style: IconButton.styleFrom(
+                  backgroundColor: AppColors.accent,
+                  foregroundColor: AppColors.white,
+                  padding: EdgeInsets.zero,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                ),
+                icon: const Icon(Icons.arrow_forward, size: 18),
+              ),
             ),
           ],
         ),
-        Text(artwork.title),
-        Text(artwork.artistDisplay),
-        Table(
+        const SizedBox(height: 16),
+        Row(
           children: [
-            TableRow(
-              children: [
-                OutlinedButton(
-                  onPressed: () {
-                    if (index > 0) {
+            OutlinedButton(
+              onPressed: index > 0
+                  ? () {
                       setState(() {
                         index--;
                       });
                     }
-                  },
-                  child: Text(AppStrings.buttonPrevious),
+                  : null,
+              style: navButtonStyle,
+              child: Text(AppStrings.buttonPrevious),
+            ),
+            Expanded(
+              child: Text(
+                '${index + 1} / $length',
+                textAlign: TextAlign.center,
+                style: AppTextStyles.chipLabel.copyWith(
+                  color: AppColors.inkFaint,
                 ),
-                OutlinedButton(
-                  onPressed: () {
-                    if (index < length - 1) {
+              ),
+            ),
+            OutlinedButton(
+              onPressed: index < length - 1
+                  ? () {
                       setState(() {
                         index++;
                       });
                     }
-                  },
-                  child: Text(AppStrings.buttonNext),
-                ),
-              ],
+                  : null,
+              style: navButtonStyle,
+              child: Text(AppStrings.buttonNext),
             ),
           ],
         ),
       ],
     );
   }
+
+  ButtonStyle get navButtonStyle => OutlinedButton.styleFrom(
+    foregroundColor: AppColors.inkMuted,
+    disabledForegroundColor: AppColors.inkFaint,
+    side: BorderSide(color: AppColors.divider),
+    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    textStyle: AppTextStyles.chipLabel.copyWith(
+      fontSize: 12,
+      letterSpacing: 0.5,
+    ),
+  );
 }
