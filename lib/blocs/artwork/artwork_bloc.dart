@@ -1,11 +1,13 @@
 import 'package:artexplorer/blocs/artwork/artwork_event.dart';
 import 'package:artexplorer/blocs/artwork/artwork_state.dart';
 import 'package:artexplorer/repositories/art_repository.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ArtworkBloc extends Bloc<ArtworkEvent, ArtworkState> {
   final ArtRepository _repository;
   int _page = 1;
+  bool _isLoadingMore = false;
 
   ArtworkBloc(this._repository) : super(ArtworkLoading()) {
     on<FetchArtworks>((event, emit) async {
@@ -41,16 +43,19 @@ class ArtworkBloc extends Bloc<ArtworkEvent, ArtworkState> {
       }
     });
     on<LoadNextPage>((event, emit) async {
-      if (state is! ArtworkLoaded) return;
+      if (state is! ArtworkLoaded || _isLoadingMore) return;
+      _isLoadingMore = true;
       final current = state as ArtworkLoaded;
-      emit(ArtworkLoading());
       try {
-        final artworks = await _repository.fetchArtworksByPage(++_page);
+        final artworks = await _repository.fetchArtworksByPage(_page + 1);
+        _page++;
         final completeList = [...current.artworks, ...artworks];
         emit(ArtworkLoaded(artworks: completeList, page: _page));
       } catch (e) {
-        --_page;
-        emit(ArtworkError(error: e.toString()));
+        // Background prefetch — leave the user on the artwork they're viewing.
+        debugPrint('LoadNextPage failed: $e');
+      } finally {
+        _isLoadingMore = false;
       }
     });
   }

@@ -218,21 +218,16 @@ class _BrowseScreenState extends State<BrowseScreen> {
               style: navButtonStyle,
               child: Text(AppStrings.buttonPrevious),
             ),
-            Expanded(
-              child: Text(
-                '${index + 1} / $length',
-                textAlign: TextAlign.center,
-                style: AppTextStyles.chipLabel.copyWith(
-                  color: AppColors.inkFaint,
-                ),
-              ),
-            ),
+            const Spacer(),
             OutlinedButton(
               onPressed: index < length - 1
                   ? () {
                       setState(() {
                         index++;
                       });
+                      if (index == length - 1) {
+                        context.read<ArtworkBloc>().add(LoadNextPage());
+                      }
                     }
                   : null,
               style: navButtonStyle,
