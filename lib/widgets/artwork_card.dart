@@ -1,4 +1,5 @@
 import 'package:artexplorer/theme/app_colors.dart';
+import 'package:artexplorer/utils/app_strings.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -30,6 +31,7 @@ class ArtworkCard extends StatelessWidget {
             child: CachedNetworkImage(
               fit: BoxFit.contain,
               imageUrl: imageUrl,
+              httpHeaders: AppStrings.aicHeaders,
               placeholder: (context, url) => Container(
                 color: AppColors.background,
                 child: Center(

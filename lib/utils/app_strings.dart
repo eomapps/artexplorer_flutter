@@ -12,6 +12,15 @@ class AppStrings {
   static const String fields =
       'id,title,artist_display,date_display,image_id,style_titles,place_of_origin';
 
+  /// AIC asks API consumers to identify themselves so they can make contact
+  /// if an app misbehaves. Unidentified clients get flagged as bots and 403'd.
+  static const String aicUserAgentHeader = 'AIC-User-Agent';
+  static const String aicUserAgent =
+      'art-explorer (artexplorer.handoff809@slmail.me)';
+  static const Map<String, String> aicHeaders = {
+    aicUserAgentHeader: aicUserAgent,
+  };
+
   static const String continueWithGoogle = 'Continue with Google';
   static const String signInWithEmail = 'Sign in with email';
   static const String youAcceptTOS =

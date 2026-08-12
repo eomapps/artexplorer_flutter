@@ -12,7 +12,7 @@ class ArtRepository {
       'fields': AppStrings.fields,
       'query[term][is_public_domain]': 'true',
     });
-    var response = await http.get(url);
+    var response = await http.get(url, headers: AppStrings.aicHeaders);
     if (response.statusCode == 200) {
       var jsonResponse =
           convert.jsonDecode(response.body) as Map<String, dynamic>;
@@ -30,7 +30,7 @@ class ArtRepository {
       'fields': AppStrings.fields,
       'query[term][is_public_domain]': 'true',
     });
-    var response = await http.get(url);
+    var response = await http.get(url, headers: AppStrings.aicHeaders);
     if (response.statusCode == 200) {
       var jsonResponse =
           convert.jsonDecode(response.body) as Map<String, dynamic>;
@@ -48,7 +48,7 @@ class ArtRepository {
       'fields': AppStrings.fields,
       'query[term][is_public_domain]': 'true',
     });
-    var response = await http.get(url);
+    var response = await http.get(url, headers: AppStrings.aicHeaders);
     if (response.statusCode == 200) {
       var jsonResponse =
           convert.jsonDecode(response.body) as Map<String, dynamic>;
