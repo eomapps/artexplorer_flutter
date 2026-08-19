@@ -3,6 +3,7 @@ import 'package:artexplorer/blocs/artwork/artwork_event.dart';
 import 'package:artexplorer/blocs/artwork/artwork_state.dart';
 import 'package:artexplorer/blocs/auth/auth_bloc.dart';
 import 'package:artexplorer/blocs/auth/auth_event.dart';
+import 'package:artexplorer/blocs/auth/auth_state.dart';
 import 'package:artexplorer/models/artwork.dart';
 import 'package:artexplorer/screens/collection_screen.dart';
 import 'package:artexplorer/screens/detail_screen.dart';
@@ -10,6 +11,7 @@ import 'package:artexplorer/theme/app_colors.dart';
 import 'package:artexplorer/theme/app_text_styles.dart';
 import 'package:artexplorer/utils/app_strings.dart';
 import 'package:artexplorer/widgets/artwork_card.dart';
+import 'package:artexplorer/widgets/auth_bottom_sheet.dart';
 import 'package:artexplorer/widgets/linen_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -93,6 +95,8 @@ class _BrowseScreenState extends State<BrowseScreen> {
               ),
             );
           case ArtworkLoaded():
+            final isAuthenticated =
+                context.watch<AuthBloc>().state is AuthAuthenticated;
             return Scaffold(
               appBar: AppBar(
                 actions: [
@@ -109,9 +113,22 @@ class _BrowseScreenState extends State<BrowseScreen> {
                   ),
                   IconButton(
                     onPressed: () {
-                      context.read<AuthBloc>().add(SignOut());
+                      if (isAuthenticated) {
+                        context.read<AuthBloc>().add(SignOut());
+                      } else {
+                        showModalBottomSheet(
+                          backgroundColor: Colors.transparent,
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (BuildContext context) {
+                            return Wrap(children: [const AuthBottomSheet()]);
+                          },
+                        );
+                      }
                     },
-                    icon: Icon(Icons.logout),
+                    icon: isAuthenticated
+                        ? Icon(Icons.logout)
+                        : Icon(Icons.login),
                   ),
                 ],
                 title: Text(state.artworks[index].placeOfOrigin),

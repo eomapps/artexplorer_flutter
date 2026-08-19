@@ -6,7 +6,6 @@ import 'package:artexplorer/blocs/collection/collection_bloc.dart';
 import 'package:artexplorer/repositories/art_repository.dart';
 import 'package:artexplorer/repositories/auth_repository.dart';
 import 'package:artexplorer/repositories/collection_repository.dart';
-import 'package:artexplorer/screens/auth_screen.dart';
 import 'package:artexplorer/screens/browse_screen.dart';
 import 'package:artexplorer/theme/app_theme.dart';
 import 'package:artexplorer/utils/app_strings.dart';
@@ -55,7 +54,7 @@ class AppBase extends StatelessWidget {
           AuthSessionChecking() => Scaffold(
             body: Center(child: CircularProgressIndicator()),
           ),
-          _ => AuthScreen(),
+          _ => BrowseScreen(),
         };
       },
     );

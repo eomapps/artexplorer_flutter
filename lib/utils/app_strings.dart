@@ -66,4 +66,5 @@ class AppStrings {
   static const String noSavedWorks = 'No saved works yet';
   static const String emptyCollectionPrompt =
       'Browse artworks and save the ones that move you.';
+  static const String loginPrompt = 'Log in to view your collection';
 }

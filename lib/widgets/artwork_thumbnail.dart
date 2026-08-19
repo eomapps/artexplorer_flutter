@@ -1,6 +1,7 @@
 import 'package:artexplorer/models/artwork.dart';
 import 'package:artexplorer/screens/detail_screen.dart';
 import 'package:artexplorer/theme/app_colors.dart';
+import 'package:artexplorer/utils/app_strings.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -41,6 +42,7 @@ class ArtworkThumbnail extends StatelessWidget {
                   ),
                   Center(
                     child: CachedNetworkImage(
+                      httpHeaders: AppStrings.aicHeaders,
                       fit: BoxFit.contain,
                       imageUrl: artwork.imageUrl!,
                       placeholder: (context, url) => Container(

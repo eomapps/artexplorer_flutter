@@ -1,3 +1,5 @@
+import 'package:artexplorer/blocs/auth/auth_bloc.dart';
+import 'package:artexplorer/blocs/auth/auth_state.dart';
 import 'package:artexplorer/blocs/collection/collection_bloc.dart';
 import 'package:artexplorer/blocs/collection/collection_event.dart';
 import 'package:artexplorer/blocs/collection/collection_state.dart';
@@ -6,6 +8,7 @@ import 'package:artexplorer/theme/app_colors.dart';
 import 'package:artexplorer/theme/app_text_styles.dart';
 import 'package:artexplorer/utils/app_strings.dart';
 import 'package:artexplorer/widgets/artwork_card.dart';
+import 'package:artexplorer/widgets/auth_bottom_sheet.dart';
 import 'package:artexplorer/widgets/linen_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -80,12 +83,25 @@ class DetailScreen extends StatelessWidget {
         const SizedBox(height: 20),
         ElevatedButton.icon(
           onPressed: () {
-            if (isSaved) {
-              context.read<CollectionBloc>().add(
-                RemoveArtwork(id: artwork.id!),
-              );
+            if (context.read<AuthBloc>().state is AuthAuthenticated) {
+              if (isSaved) {
+                context.read<CollectionBloc>().add(
+                  RemoveArtwork(id: artwork.id!),
+                );
+              } else {
+                context.read<CollectionBloc>().add(
+                  SaveArtwork(artwork: artwork),
+                );
+              }
             } else {
-              context.read<CollectionBloc>().add(SaveArtwork(artwork: artwork));
+              showModalBottomSheet(
+                backgroundColor: Colors.transparent,
+                context: context,
+                isScrollControlled: true,
+                builder: (BuildContext context) {
+                  return Wrap(children: [AuthBottomSheet(artwork: artwork)]);
+                },
+              );
             }
           },
           style: ElevatedButton.styleFrom(

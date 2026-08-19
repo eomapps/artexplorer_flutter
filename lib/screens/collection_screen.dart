@@ -1,3 +1,5 @@
+import 'package:artexplorer/blocs/auth/auth_bloc.dart';
+import 'package:artexplorer/blocs/auth/auth_state.dart';
 import 'package:artexplorer/blocs/collection/collection_event.dart';
 import 'package:artexplorer/blocs/collection/collection_state.dart';
 import 'package:artexplorer/theme/app_colors.dart';
@@ -19,6 +21,38 @@ class CollectionScreen extends StatefulWidget {
 class _CollectionsScreenState extends State<CollectionScreen> {
   @override
   Widget build(BuildContext context) {
+    final isAuthenticated =
+        context.watch<AuthBloc>().state is AuthAuthenticated;
+    if (!isAuthenticated) {
+      return Scaffold(
+        appBar: AppBar(title: Text(AppStrings.myCollection)),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(32),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 64,
+                  height: 64,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.divider, width: 2),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Icon(Icons.lock_outline, color: AppColors.inkFaint),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  AppStrings.loginPrompt,
+                  style: AppTextStyles.serifItalicMuted,
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
     return BlocBuilder<CollectionBloc, CollectionState>(
       builder: (context, state) {
         switch (state) {
