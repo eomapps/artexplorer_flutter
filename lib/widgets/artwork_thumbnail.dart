@@ -1,6 +1,7 @@
 import 'package:artexplorer/models/artwork.dart';
 import 'package:artexplorer/screens/detail_screen.dart';
 import 'package:artexplorer/theme/app_colors.dart';
+import 'package:artexplorer/theme/app_text_styles.dart';
 import 'package:artexplorer/utils/app_strings.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -74,11 +75,19 @@ class ArtworkThumbnail extends StatelessWidget {
             ),
           ),
         ),
-        Text(artwork.title, maxLines: 2, overflow: TextOverflow.ellipsis),
+        const SizedBox(height: 8),
+        Text(
+          artwork.title,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.listTitle.copyWith(color: AppColors.ink),
+        ),
+        const SizedBox(height: 2),
         Text(
           artwork.artistDisplay,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.caption.copyWith(color: AppColors.inkMuted),
         ),
       ],
     );

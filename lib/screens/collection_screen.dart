@@ -169,7 +169,7 @@ class _CollectionsScreenState extends State<CollectionScreen> {
                     mainAxisSpacing: 12,
                     crossAxisSpacing: 12,
                     childAspectRatio:
-                        0.8, // tune to taste once you see it render
+                        0.8,
                   ),
                   itemCount: state.artworks.length,
                   itemBuilder: (context, i) {
