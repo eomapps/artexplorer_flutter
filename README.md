@@ -1,5 +1,7 @@
 # Art Explorer
 
+[![CI](https://github.com/eomapps/artexplorer_flutter/actions/workflows/ci.yml/badge.svg)](https://github.com/eomapps/artexplorer_flutter/actions/workflows/ci.yml)
+
 A Flutter app for browsing the Art Institute of Chicago's public collection — browse thousands of artworks and save favourites to a personal collection that syncs across devices.
 
 *Built in public as a portfolio piece, demonstrating BLoC, REST APIs, Firebase Auth, and Firestore.*
@@ -94,8 +96,8 @@ lib/
 - [x] Collection screen — grid of saved artworks, empty state
 - [x] Unauthenticated-save flow — modal `AuthBottomSheet`, auto-completes the save post sign-in
 - [x] Polish — empty states, error states
-- [ ] Tests (`bloc_test`)
-- [ ] CI (`flutter analyze` + `flutter test`)
+- [x] Tests (`bloc_test`)
+- [x] CI (`flutter analyze` + `flutter test`)
 
 ## Getting Started
 
