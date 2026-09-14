@@ -6,6 +6,12 @@ A Flutter app for browsing the Art Institute of Chicago's public collection — 
 
 *Built in public as a portfolio piece, demonstrating BLoC, REST APIs, Firebase Auth, and Firestore.*
 
+## Demo
+
+[<img src="docs/art-explorer-demo.gif" width="240" alt="Art Explorer demo: browse Under the Wave, view saved works, and open an artwork from the collection"/>](docs/art-explorer-demo.mov)
+
+<sub>Click the preview to watch the full demo.</sub>
+
 ## Screenshots
 
 | | Browse | Detail | Saved | Collection |
